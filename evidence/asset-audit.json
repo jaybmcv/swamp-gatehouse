@@ -1,0 +1,27 @@
+{
+  "assets": [
+    {
+      "src": "/assets/gatehouse/weathered/door-weathered-v4.glb",
+      "placements": 80,
+      "triangles": 216,
+      "bytes": 108700,
+      "sha256": "2632b0bbbb733bb391bf283187d1bcfead545a156a6581ae0c713594bae49683",
+      "errors": 0,
+      "warnings": 0
+    },
+    {
+      "src": "/assets/gatehouse/weathered/scenery-weathered-v4.glb",
+      "placements": 1,
+      "triangles": 158608,
+      "bytes": 22937936,
+      "sha256": "9726fea717da86a9a7ac99f9124298d75dc1f2cb62d0253824e87902a8500b01",
+      "errors": 0,
+      "warnings": 0
+    }
+  ],
+  "cubeCount": 5492,
+  "labelCount": 132,
+  "triangleInventory": 241792,
+  "scope": "GLB placements plus all MML cubes including invisible proxies; label renderer geometry excluded",
+  "historicalLedger": 242056
+}

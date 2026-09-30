@@ -1,0 +1,10 @@
+node_modules/
+.local/
+.env*
+__pycache__/
+assets/gatehouse/optimized/
+builds/
+examples/*
+!examples/swamp-full-course-host-walk.html
+!examples/swamp-full-course-host-walk-preview.html
+!examples/swamp-full-course-compact.html

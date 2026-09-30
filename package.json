@@ -1,0 +1,18 @@
+{
+  "name": "swamp-gatehouse",
+  "version": "0.1.0",
+  "private": true,
+  "type": "module",
+  "scripts": {
+    "build": "node scripts/build.mjs",
+    "validate": "mml validate examples/swamp-full-course-host-walk.html examples/swamp-full-course-compact.html",
+    "serve": "mml serve-dir examples --assets assets --host 127.0.0.1 --port 7079",
+    "audit": "node scripts/audit.mjs",
+    "test": "node scripts/check-runtime.mjs"
+  },
+  "devDependencies": {
+    "three": "0.186.0",
+    "@mml-io/mml-cli": "0.26.1",
+    "gltf-validator": "2.0.0-dev.3.10"
+  }
+}
