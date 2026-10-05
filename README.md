@@ -41,7 +41,7 @@ Install [the skill](https://github.com/jaybmcv/mml-build-workflow), then ask:
 
 ## Gameplay and world testing
 
-Wrong doors use a moving wall plus riser: **9m push, 4m lift, 350ms out and back**, collision disabled **60ms before to 60ms after the apex**. Correct doors reclose. These are project tuning values, not a portable avatar impulse API. Historical Swamp trials informed this build; small avatars, strafing, jumping, crowds and different clients still need testing for any deployed revision. Local schema/GLB checks do not establish native-world reliability or 100-player capacity.
+Wrong doors use a moving wall plus riser: **9m push, 4m lift, 350ms out and back**, collision disabled **60ms before to 60ms after the apex**. If a delayed update skips the entire release window, both colliders stay non-solid for the remaining return movement and restore at home. An update arriving after the stroke ends returns directly home without replaying the launch. Correct doors reclose. These are project tuning values, not a portable avatar impulse API. Historical Swamp trials informed this build; small avatars, strafing, jumping, crowds and different clients still need testing for any deployed revision. Local schema/GLB checks do not establish native-world reliability or 100-player capacity.
 
 The reset prompt uses **demo-reset**, deliberately public. This is a demonstration gate, not authentication. Replace or remove it for your own use; do not put a real secret in public MML source.
 

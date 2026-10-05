@@ -5538,14 +5538,14 @@ function prepare(){
  for(var r=0;r<COURSE.rows;r++){
   var choices=[0,1,2,3,4,5,6,7];
   for(var j=7;j>0;j--){var k=Math.floor(Math.random()*(j+1)),tmp=choices[j];choices[j]=choices[k];choices[k]=tmp;}
-  doors.forEach(function(d){if(d.row!==r)return;d.safe=choices.slice(0,COURSE.safeCounts[r]).indexOf(d.col)!==-1;d.start=null;d.open=false;home(d);sign(d,d.letter);});
+  doors.forEach(function(d){if(d.row!==r)return;d.safe=choices.slice(0,COURSE.safeCounts[r]).indexOf(d.col)!==-1;d.start=null;d.open=false;d.released=false;d.recoverRelease=false;home(d);sign(d,d.letter);});
   set('row-'+r,'content','GATE '+(r+1)+' / FIND A WAY');
  }
  set('reset-label','content','RESET / ENTER CODE');
 }
 function touch(d){
  if(resetAt||d.open||d.start!==null)return;
- attempts++;d.start=Date.now();
+ attempts++;d.start=Date.now();d.released=false;d.recoverRelease=false;
  if(d.safe){d.open=true;opened++;set(d.id,'collide',false);sign(d,d.letter+' / GO','#285c45');}
  else{launches++;sign(d,d.letter+' / WRONG','#713e31');}
 }
@@ -5568,11 +5568,17 @@ function tick(){
    if(t>=endAt){if(d.open){d.open=false;opened--;home(d);sign(d,d.letter);}if(t>=endAt+safeMotion.cooldown)d.start=null;}
    return;
   }
-  var solid=!(t>=motion.out-motion.release&&t<motion.out+motion.restore);
-  if(!solid){set(d.id,'collide',false);set(d.id+'-pad','collide',false);}
+  // A delayed callback can skip the entire release window. In that case,
+  // release before moving and remain non-solid for the rest of the return.
+  if(!d.released&&t>=motion.out+motion.restore)d.recoverRelease=true;
+  var solid=!(t>=motion.out-motion.release&&t<motion.out+motion.restore||d.recoverRelease);
+  if(!solid){set(d.id,'collide',false);set(d.id+'-pad','collide',false);d.released=true;}
   var p=t<motion.out?t/motion.out:t<motion.out+motion.back?1-(t-motion.out)/motion.back:0;
   set(d.id,'y',1.75+motion.lift*p);set(d.id,'z',d.z-.75+motion.distance*p);
   set(d.id+'-pad','y',motion.lift*p);set(d.id+'-pad','z',d.z+2.2+motion.distance*p);
+  // Even a callback arriving after the whole stroke releases before snapping
+  // home, then restores collision only after both colliders are back in place.
+  if(t>=motion.out+motion.back){solid=true;d.recoverRelease=false;}
   if(solid){set(d.id,'collide',true);set(d.id+'-pad','collide',true);}
   if(t>=motion.out+motion.back+motion.cooldown){d.start=null;sign(d,d.letter);}
  });
